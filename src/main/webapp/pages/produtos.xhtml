@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Produtos</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Produto - listagem">
+
+			<p:dataTable emptyMessage="nenhum registro encontrado :("
+				paginator="true">
+				<p:column headerText="Descrição" sortBy=""></p:column>
+				<p:column headerText="Qtds"></p:column>
+				<p:column headerText="Preço"></p:column>
+				<p:column headerText="Fabricante"></p:column>
+				<p:column headerText="Opçao"></p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Salvar" oncomplete="PF('Novo').show();"
+						update=":frmNovo:pnlNovo" />
+				</f:facet>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Produto - Novo" widgetVar="Novo" modal="true"
+		closable="false" resizable="false" draggable="false"
+		appendTo="@(body)">
+		<h:form id="frmNovo">
+			<h:panelGrid id="pnlNovo" columns="2">
+				<p:outputLabel value="Descrição:" />
+				<p:inputText size="30" maxlength="50" required="true"
+					requiredMessage="campo obrigatorio" />
+					
+					<p:outputLabel value="Quantidade:" />
+				<p:inputText size="5" maxlength="5" required="true"
+					requiredMessage="campo obrigatorio" />
+					
+					<p:outputLabel value="Preço:" />
+				<p:inputText size="7" maxlength="7" required="true"
+					requiredMessage="campo obrigatorio" />
+
+				<p:outputLabel value="Fabricante:"/>
+				<p:selectOneMenu filter="true">
+					<f:selectItem itemValue="" itemLabel="Selecione um Fabricante"/>
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:form>
+
+		<h:panelGrid columns="2">
+			<p:commandButton value="Gravar" />
+
+			<p:commandButton value="Cancelar" onclick="PF('Novo').hide();" />
+		</h:panelGrid>
+	</p:dialog>
+</h:body>
+</html>

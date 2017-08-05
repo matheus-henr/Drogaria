@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Cidade</title>
+</h:head>
+<h:body>
+	<h:form>
+	<p:growl id="messagem"/>
+		<p:panel header="Cidades - listagem">
+
+			<p:dataTable emptyMessage="nenhum registro encontrado :("
+				paginator="true"  value="#{cidadeBean.cidades}" var="Cidade">
+				<p:column headerText="Nome" sortBy="#{cidadeBean.cidade.cidade}" filterBy="#{cidadeBean.cidade.cidade}">
+					<h:outputText value="#{Cidade.cidade}"/> 
+				</p:column>
+				<p:column headerText="Estado" sortBy="#{cidadeBean.cidade.estado}" filterBy="#{cidadeBean.cidade.estado}">
+					<h:outputText value="#{Cidade.estado}"/>
+				</p:column>
+				<p:column headerText="Opçao"></p:column>
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo()}"  oncomplete="PF('Novo').show();"
+						update=":frmNovo:pnlNovo" />
+				</f:facet>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+	
+	<p:dialog header="Cidade - Novo" widgetVar="Novo" modal="true"
+		closable="false" resizable="false" draggable="false"
+		appendTo="@(body)">
+		<h:form id="frmNovo">
+			<h:panelGrid id="pnlNovo" columns="2">
+				<p:outputLabel value="Nome:" />
+				<p:inputText size="30" maxlength="50" required="true"
+						value="#{cidadeBean.cidade.cidade}"
+					requiredMessage="campo obrigatorio" />
+
+				<p:outputLabel value="Estado:"/>
+				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}">
+					<f:selectItem itemValue="" itemLabel="Selecione Um Estado"/>
+					<f:selectItems value="#{cidadeBean.estados}" var="cidade" itemLabel="#{cidade.nome}" itemValue="#{cidade}"/>
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</h:form>
+
+		<h:panelGrid columns="2">
+			<p:commandButton value="Gravar" 
+			actionListener="#{cidadeBean.salvar}"
+					update=":frmTabela:panelTabela :mensagem"
+					oncomplete="PF('Novo').hide();" />/>
+
+			<p:commandButton value="Cancelar" onclick="PF('Novo').hide();" />
+		</h:panelGrid>
+	</p:dialog>
+</h:body>
+</html>
