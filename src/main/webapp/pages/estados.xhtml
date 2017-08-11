@@ -12,32 +12,33 @@
 	<f:metadata>
 		<f:viewParam name="codigo" value="#{estadoBean.codigo}"/>
 	</f:metadata>
- 
+
 	<p:growl id="mensagem" life="2000" />
 	<h:form id="frmTabela">
 		<p:panel id="panelTabela" header="Estados - listagem">
 
 			<p:dataTable id="tabela" emptyMessage="nenhum registro encontrado :("
 				scrollRows="27" scrollable="true" liveScroll="true" scrollHeight="200"
-				 value="#{estadoBean.estados}" var="estado"
-				filteredValue="#{estadoBean.estadosFiltrado}">
+				 value="#{estadoBean.estados}" var="estado">
 				
 				<p:column headerText="Nome" sortBy="#{estado.nome}"
 					filterBy="#{estado.nome}">
 					<h:outputLabel value="#{estado.nome}" />
 				</p:column>
+				
 				<p:column headerText="Sigla">
 					<h:outputLabel value="#{estado.sigla}" />
 				</p:column>
+				
 				<p:column headerText="Opção">
-					<p:commandButton icon=" ui-icon-trash" actionListener="#{estadoBean.excluir()}" update=":mensagem :frmTabela:panelTabela">
+					<p:commandButton icon=" ui-icon-trash" actionListener="#{estadoBean.excluir}" update=":mensagem :frmTabela:panelTabela">
 						 <p:confirm header="Deletar" message=" Deseja apagar Estado?" icon="ui-icon-alert" />
 						 <f:param name="codigo" value="#{estado.codigo}"/>
 					</p:commandButton>
 					
-					<p:commandButton icon="ui-icon-pencil" actionListener="#{fabricanteBean.findByID()}"
-						oncomplete="PF('Novo').show();" update=":frmNovo:pnlNovo" >
-						<f:param name="codigo" value="#{fa.codigo}"/>
+					<p:commandButton icon="ui-icon-pencil" actionListener="#{estadoBean.findByID}"  
+						oncomplete="PF('Novo').show()"	update=":frmNovo:pnlNovo" >
+						<f:param name="codigo" value="#{estado.codigo}"/>
 					</p:commandButton>
 				</p:column>
 
@@ -47,12 +48,14 @@
 						oncomplete="PF('Novo').show();" update=":frmNovo:pnlNovo" />
 				</f:facet>
 			</p:dataTable>
+			
 			<p:confirmDialog global="true">
 				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
+		
 		</p:panel>
 	</h:form>
 	

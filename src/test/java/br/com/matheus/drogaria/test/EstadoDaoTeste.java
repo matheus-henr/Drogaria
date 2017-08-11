@@ -21,6 +21,7 @@ public class EstadoDaoTeste {
 	}
 	
 	@Test
+	@Ignore
 	public void listar() {
 		EstadoDao estadoDAO = new EstadoDao();
 		List<Estado> resultado = estadoDAO.listar();
@@ -30,5 +31,24 @@ public class EstadoDaoTeste {
 		for (Estado estado : resultado) {
 			System.out.println(estado.getCodigo() + " - " + estado.getSigla() + " - " + estado.getNome());
 		}
+	}
+	@Test
+	public void editar(){
+		EstadoDao dao = new EstadoDao();
+		Estado estado = dao.buscar(13);
+		
+		System.out.println(estado.getNome());
+		System.out.println(estado.getSigla());
+		
+		estado.setNome("Matheus Henrique");
+		estado.setSigla("MH");
+		
+		dao.merge(estado);
+		
+		 estado = dao.buscar(13);
+		 
+		System.out.println(estado.getNome());
+		System.out.println(estado.getSigla());
+		
 	}
 }

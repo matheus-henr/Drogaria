@@ -13,7 +13,7 @@ import br.com.matheus.drogaria.dao.FabricanteDao;
 import br.com.matheus.drogaria.domain.Fabricante;
 import br.com.matheus.drogaria.util.ConverteUtil;
 
-@ManagedBean
+@ManagedBean(name="fabricanteBean")
 @ViewScoped
 public class FabricanteBean {
 	private Fabricante fabricante;

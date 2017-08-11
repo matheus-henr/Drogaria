@@ -28,9 +28,9 @@
 		<!-- Mostra as SQLs Geradas -->
 		<property name="show_sql">true</property>
 
-		<!-- Cria as tabelas do banco de dados -->
-		<property name="hbm2ddl.auto">validate</property>
-		
+		<!-- Cria as tabelas do banco de dados o veja apare que ser ve o 'upadate' -->
+		<property name="hbm2ddl.auto">update</property>
+
 		<mapping class="br.com.matheus.drogaria.domain.Cidade"/>
 		<mapping class="br.com.matheus.drogaria.domain.Cliente"/>
 		<mapping class="br.com.matheus.drogaria.domain.Estado"/>

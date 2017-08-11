@@ -12,12 +12,13 @@ import br.com.matheus.drogaria.dao.CidadeDao;
 import br.com.matheus.drogaria.dao.EstadoDao;
 import br.com.matheus.drogaria.domain.Cidade;
 import br.com.matheus.drogaria.domain.Estado;
+import br.com.matheus.drogaria.util.ConverteUtil;
 
 
 
 
 @ViewScoped
-@ManagedBean
+@ManagedBean(name="cidadeBean")
 public class CidadeBean  {
 	private Cidade cidade;
 	private List<Cidade> cidades;
@@ -81,9 +82,24 @@ public class CidadeBean  {
 	}
 	
 	public void salvar(){
-		getCidadeDao().salvar(cidade);
+		getCidadeDao().merge(cidade);
 		Messages.addFlashGlobalInfo("Salvo");
 		listar();
 	}
+	
+	public void excluir() {
+		findByID();
+		getCidadeDao().excluir(cidade);
+		listar();
+		Messages.addGlobalInfo("Apagado com sucesso: " + cidade.getNome());
+	}
+
+	public void findByID() {
+		System.out.println(codigo);
+		cidade = getCidadeDao().buscar(ConverteUtil.getId(codigo));
+		System.out.println(cidade.getNome());
+
+	}
+	
 
 }

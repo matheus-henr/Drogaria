@@ -25,14 +25,14 @@
 				<p:column headerText="Descrição" sortBy="">
 					<h:outputText value="#{fabricante.descricao}" />
 				</p:column>
-				
+				 
 				<p:column headerText="Opção">
-					<p:commandButton icon=" ui-icon-trash" actionListener="#{fabricanteBean.excluir()}" update=":mensagem :frmTabela:panelTabela">
+					<p:commandButton icon=" ui-icon-trash" actionListener="#{fabricanteBean.excluir}" update=":mensagem :frmTabela:panelTabela">
 						 <p:confirm header="Deletar" message=" Deseja apagar Fabricante?" icon="ui-icon-alert" />
 						 <f:param name="codigo" value="#{fabricante.codigo}"/>
 					</p:commandButton>
 					
-					<p:commandButton icon="ui-icon-pencil" actionListener="#{fabricanteBean.findByID()}"
+					<p:commandButton icon="ui-icon-pencil" actionListener="#{fabricanteBean.findByID}"
 						oncomplete="PF('Novo').show();" update=":frmNovo:pnlNovo" >
 						<f:param name="codigo" value="#{fabricante.codigo}"/>
 					</p:commandButton>
@@ -42,7 +42,7 @@
 
 				<f:facet name="footer">
 					<p:commandButton value="Novo"
-						actionListener="#{fabricanteBean.novo()}"
+						actionListener="#{fabricanteBean.novo}"
 						oncomplete="PF('Novo').show();" update=":frmNovo:pnlNovo" />
 				</f:facet>
 			</p:dataTable>

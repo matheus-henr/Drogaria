@@ -13,11 +13,20 @@ public class GenericDao<Entidade> {
 
 	private Class<Entidade> classe;
 
+	
+	public Class<Entidade> getClasse() {
+		return classe;
+	}
+	
+	public void setClasse(Class<Entidade> classe) {
+		this.classe = classe;
+	}//sua dao ta injetando a  classe corretamente, tá correto nehum erro no cosntrutor até onde vi
+	
 	@SuppressWarnings("unchecked")
 	// recuperando a classe
 	public GenericDao() {
 		this.classe = (Class<Entidade>) ((ParameterizedType) getClass().getGenericSuperclass())
-				.getActualTypeArguments()[0];
+				.getActualTypeArguments()[0];//tava procurando essa 
 	}
 
 	public void salvar(Entidade entidade) {
@@ -26,7 +35,7 @@ public class GenericDao<Entidade> {
 		Transaction transacao = null;
 		try {
 			transacao = sessao.beginTransaction();// passando a sessao com o
-													// banco para transacao
+													// banco para transacao inicializa a pagina 
 			sessao.save(entidade);// salvando a entidade
 			transacao.commit();// executando o comando Hibernate
 		} catch (RuntimeException e) {

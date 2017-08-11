@@ -12,7 +12,7 @@ import br.com.matheus.drogaria.dao.EstadoDao;
 import br.com.matheus.drogaria.domain.Estado;
 import br.com.matheus.drogaria.util.ConverteUtil;
 
-@ManagedBean
+@ManagedBean(name = "estadoBean")
 @ViewScoped
 public class EstadoBean {
 	private Estado estado;
@@ -20,10 +20,11 @@ public class EstadoBean {
 	private List<Estado> estados;
 	private List<Estado> estadosFiltrado;
 	private String codigo;
-	
+
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
+
 	public String getCodigo() {
 		return codigo;
 	}
@@ -64,10 +65,9 @@ public class EstadoBean {
 		this.estadoDao = estadoDao;
 	}
 
-	
 	@PostConstruct
 	public void listar() {
-	estados = getEstadoDao().listar();
+		estados = getEstadoDao().listar();
 	}
 
 	public void novo() {
@@ -80,22 +80,17 @@ public class EstadoBean {
 		Messages.addFlashGlobalInfo("Salvo Estado:" + estado.getNome());
 		estados = getEstadoDao().listar();
 	}
-	
-	
-	public void excluir(){
+
+	public void excluir() {
 		findByID();
 		getEstadoDao().excluir(estado);
 		listar();
 		Messages.addGlobalInfo("Apagado com sucesso: " + estado.getNome());
 	}
-	
-	
-	public void findByID(){
+
+	public void findByID() {
 		estado = getEstadoDao().buscar(ConverteUtil.getId(codigo));
-		System.out.println(estado.getCodigo());
+
 	}
-	
-	
-	
-	
+
 }
