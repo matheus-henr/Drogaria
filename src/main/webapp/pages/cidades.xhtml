@@ -10,38 +10,48 @@
 </h:head>
 <h:body>
 	<f:metadata>
-		<f:viewParam name="codigo" value="#{cidadeBean.codigo}"></f:viewParam>
+		<f:viewParam name="codigo" value="#{cidadeBean.codigo}"/>
 	</f:metadata>
-	<p:growl id="mensagem"/>
+	<p:growl id="mensagem" />
 	<h:form id="frmTabela">
 
 		<p:panel id="panelTabela" header="Cidades - listagem">
 
-			<p:dataTable emptyMessage="nenhum registro encontrado :("
-				paginator="true" value="#{MBcidadeBean.cidades}" var="Cidade">
-				<p:column headerText="Nome" sortBy="#{cidadeBean.cidade.nome}"
-					filterBy="#{cidadeBean.cidade.nome}">
-					<h:outputText value="#{Cidade.cidade}" />
+			<p:dataTable emptyMessage="nenhum registro encontrado :(" rows="10"
+				paginator="true" value="#{cidadeBean.cidades}" var="cidade">
+
+				<p:column headerText="Nome" sortBy="#{cidade.nome}"
+					filterBy="#{cidade.nome}">
+					<h:outputLabel value="#{cidade.nome}" />
 				</p:column>
-				<p:column headerText="Estado" sortBy="#{cidadeBean.cidade.estado}"
-					filterBy="#{cidadeBean.cidade.estado}">
-					<h:outputText value="#{Cidade.estado}" />
+				<p:column headerText="Estado"
+					sortBy="#{cidadeBean.cidade.estado.nome}"
+					filterBy="#{cidadeBean.cidade.estado.nome}">
+					<h:outputText value="#{cidade.estado.nome}" />
 				</p:column>
 				<p:column headerText="Opção">
-					<p:commandButton icon="ui-icon-trash" actionListener="#{cidadeBean.excluir}" update=":mensagem :frmTabela:panelTabela">
-						<p:confirm header="Deletar" message=" Deseja apagar Estado?" icon="ui-icon-alert" />
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{cidadeBean.excluir}"
+						update=":mensagem :frmTabela:panelTabela">
+						<p:confirm header="Deletar" message=" Deseja apagar Estado?"
+							icon="ui-icon-alert" />
+							<f:param name="codigo" value="#{cidade.codigo}" />
 					</p:commandButton>
-					
-						<p:commandButton icon="ui-icon-pencil" actionListener="#{cidadeBean.findByID}"  
-						oncomplete="PF('Novo').show()"	update=":frmNovo:pnlNovo" >
-						<f:param name="codigo" value="#{cidade.codigo}"/>
+
+					<p:commandButton icon="ui-icon-pencil" action="#{cidadeBean.listaEstados}"
+						actionListener="#{cidadeBean.findByID}"
+						oncomplete="PF('Novo').show()" update=":frmNovo:pnlNovo">
+						<f:param name="codigo" value="#{cidade.codigo}" />
+						
 					</p:commandButton>
 				</p:column>
-				
+
 
 				<f:facet name="footer">
 					<p:commandButton value="Novo" actionListener="#{cidadeBean.novo}"
-						oncomplete="PF('Novo').show();" update=":frmNovo:pnlNovo" />
+						oncomplete="PF('Novo').show();" update=":frmNovo:pnlNovo">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
 				</f:facet>
 			</p:dataTable>
 			<p:confirmDialog global="true">
@@ -58,28 +68,33 @@
 		appendTo="@(body)">
 		<h:form id="frmNovo">
 			<h:panelGrid id="pnlNovo" columns="2">
-				<p:outputLabel value="Nome:" />
-				<p:inputText size="30" maxlength="50" required="true"
+				<p:outputLabel for="nome" value="Nome:" />
+				<p:inputText id="nome" size="30" maxlength="50" required="true"
 					value="#{cidadeBean.cidade.nome}"
 					requiredMessage="campo obrigatorio" />
 
-				<p:outputLabel value="Estado:" />
-				<p:selectOneMenu filter="true" value="#{cidadeBean.cidade.estado}">
-					<f:selectItem itemValue="" itemLabel="Selecione Um Estado" />
-					<f:selectItems value="#{cidadeBean.estados}" var="cidade"
-						itemLabel="#{cidade.nome}" itemValue="#{cidade}" />
+				<p:outputLabel for="estado" value="Estado:" />
+				<p:selectOneMenu id="estado" filter="true"
+					value="#{cidadeBean.cidade.estado}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="Selecione um estado">
+					<!--<f:selectItem itemValue="" itemLabel="Selecione Um Estado" />  -->
+					<f:selectItems value="#{cidadeBean.estados}" var="estado"
+						itemValue="#{estado}" itemLabel="#{estado.nome} - #{estado.sigla}" />
 				</p:selectOneMenu>
 			</h:panelGrid>
-		
 
-		<h:panelGrid columns="2">
-			<p:commandButton value="Gravar"
-				actionListener="#{cidadeBean.salvar}"
-				update=":frmTabela:panelTabela :mensagem"
-				oncomplete="PF('Novo').hide();" />
 
-			<p:commandButton value="Cancelar" onclick="PF('Novo').hide();" />
-		</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Gravar"
+					actionListener="#{cidadeBean.salvar}"
+					update=":frmTabela:panelTabela :mensagem"
+					oncomplete="PF('Novo').hide();">
+						<f:actionListener type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+
+				<p:commandButton value="Cancelar" onclick="PF('Novo').hide();" />
+			</h:panelGrid>
 		</h:form>
 	</p:dialog>
 </h:body>

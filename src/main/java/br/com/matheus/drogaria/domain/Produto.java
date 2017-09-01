@@ -15,7 +15,7 @@ public class Produto extends GenericDomain {
 	@Column(nullable=false)
 	private Short quantidade;
 	@Column(nullable=false, precision=6, scale=2)
-	private BigDecimal preço;
+	private BigDecimal preco;
 	@ManyToOne
 	@JoinColumn(nullable=false)
 	private Fabricante fabricante;
@@ -33,11 +33,11 @@ public class Produto extends GenericDomain {
 	public void setQuantidade(Short quantidade) {
 		this.quantidade = quantidade;
 	}
-	public BigDecimal getPreço() {
-		return preço;
+	public BigDecimal getPreco() {
+		return preco;
 	}
-	public void setPreço(BigDecimal preço) {
-		this.preço = preço;
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
 	}
 	public Fabricante getFabricante() {
 		return fabricante;

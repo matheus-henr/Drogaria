@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 
 import br.com.matheus.drogaria.util.HibernateUtil;
 
@@ -56,6 +57,24 @@ public class GenericDao<Entidade> {
 			@SuppressWarnings("deprecation")
 			Criteria consulta = sessao.createCriteria(classe);
 
+			List<Entidade> resultado = consulta.list();
+			return resultado;
+		} catch (RuntimeException e) {
+			throw e;
+		} finally {
+			sessao.close();
+		}
+	}
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Entidade> listar(String campoOrdenacao) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+
+			@SuppressWarnings("deprecation")
+			Criteria consulta = sessao.createCriteria(classe);
+			consulta.addOrder(Order.asc(campoOrdenacao));
 			List<Entidade> resultado = consulta.list();
 			return resultado;
 		} catch (RuntimeException e) {

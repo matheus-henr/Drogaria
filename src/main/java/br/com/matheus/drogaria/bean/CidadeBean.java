@@ -1,5 +1,6 @@
 package br.com.matheus.drogaria.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -17,9 +18,11 @@ import br.com.matheus.drogaria.util.ConverteUtil;
 
 
 
-@ViewScoped
+
+@SuppressWarnings("serial")
 @ManagedBean(name="cidadeBean")
-public class CidadeBean  {
+@ViewScoped
+public class CidadeBean implements Serializable {
 	private Cidade cidade;
 	private List<Cidade> cidades;
 	private CidadeDao cidadeDao;
@@ -68,6 +71,8 @@ public class CidadeBean  {
 		this.codigo = codigo;
 	}
 	
+	
+	
 	@PostConstruct
 	public void listar() {
 	cidades = getCidadeDao().listar();
@@ -77,8 +82,12 @@ public class CidadeBean  {
 		
 		cidade = new Cidade();
 		
+		listaEstados();
+	}
+
+	public void listaEstados() {
 		EstadoDao dao = new EstadoDao();
-		estados = dao.listar();
+		estados = dao.listar("nome");
 	}
 	
 	public void salvar(){
@@ -95,9 +104,7 @@ public class CidadeBean  {
 	}
 
 	public void findByID() {
-		System.out.println(codigo);
 		cidade = getCidadeDao().buscar(ConverteUtil.getId(codigo));
-		System.out.println(cidade.getNome());
 
 	}
 	

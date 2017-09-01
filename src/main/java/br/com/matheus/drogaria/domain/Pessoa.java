@@ -11,9 +11,9 @@ public class Pessoa extends GenericDomain{
 
 	@Column(length=50, nullable=false)
 	private String nome;
-	@Column(length=11,nullable=false)
+	@Column(length=14,nullable=false)
 	private String cpf;
-	@Column(length=11, nullable=false)
+	@Column(length=14, nullable=false)
 	private String rg;
 	@Column(length=30, nullable=false)
 	private String rua;
@@ -25,13 +25,12 @@ public class Pessoa extends GenericDomain{
 	private String cep;
 	@Column(length=15, nullable=false)
 	private String complemento;
-	@Column(length=12, nullable=false)
+	@Column(length=13, nullable=false)
 	private String telefone;
-	@Column(length=12, nullable=false)
+	@Column(length=14, nullable=false)
 	private String celular;
 	@Column(length=30, nullable=false)
 	private String email;
-	
 	@ManyToOne
 	@JoinColumn(nullable=false)
 	private Cidade cidade;
